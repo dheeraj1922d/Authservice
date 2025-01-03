@@ -9,7 +9,7 @@ services:
       - "3307:3306"
     environment:
       MYSQL_ROOT_PASSWORD: 12345 # Root password for MySQL
-      MYSQL_DATABASE: expense-tracker # Create this database at startup
+      MYSQL_DATABASE: authservice # Create this database at startup
     volumes:
       - mysql_data:/var/lib/mysql
 
