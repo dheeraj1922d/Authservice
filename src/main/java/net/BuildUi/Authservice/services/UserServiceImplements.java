@@ -16,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -54,8 +55,14 @@ public class UserServiceImplements implements UserDetailsService {
 
         userInfoDto.setPassword(passwordEncoder.encode(userInfoDto.getPassword()));
         String userId = UUID.randomUUID().toString();
+        userInfoDto.setUserId(userId);
         userRepository.save(new UserInfo(userId , userInfoDto.getUsername() , userInfoDto.getPassword() , new HashSet<>()));
         userInfoProducer.sendEventToKafka(userInfoDto);
         return true;
     }
+
+    public String getUserByUsername(String userName){
+        return Optional.of(userRepository.findByUsername(userName)).map(UserInfo::getUserId).orElse(null);
+    }
+
 }
