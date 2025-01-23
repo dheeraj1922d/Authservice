@@ -83,4 +83,9 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
     }
 
+    @GetMapping("/auth/v1/health")
+    public ResponseEntity<?> health(){
+        return new ResponseEntity<>(true , HttpStatus.OK);
+    }
+
 }
